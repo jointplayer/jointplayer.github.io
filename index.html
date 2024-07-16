@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>говно залупа</title>
+    <style>
+        body {
+            background-color: #e0bbff; /* Нежно-фиолетовый фон */
+            transition: background-color 1s;
+        }
+
+        .button-bg-container {
+            display: flex;
+            width: 800px;
+            height: 250px;
+            position: relative;
+            cursor: pointer;
+            transition: background-image 1s;
+            background-size: cover;
+            background-repeat: no-repeat;
+            margin: 0 auto;
+        }
+
+        .background-layer,
+        .foreground-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-repeat: no-repeat;
+            transition: opacity 1s;
+            z-index: 1;
+        }
+
+        .foreground-layer {
+            z-index: 3; /* Foreground layer in front of circle */
+            pointer-events: none; /* Makes sure clicks pass through to the container */
+        }
+
+        .circle {
+            width: 226px;
+            height: 226px;
+            background-size: cover;
+            position: relative;
+            top: 50%;
+            left: 7px;
+            transform: translateY(-50%);
+            transition: left 1s;
+            z-index: 2; /* Circle in front of background layer */
+        }
+
+        .moved .circle {
+            left: calc(100% - 233px); /* Position the circle to the right with a margin */
+        }
+
+        .hidden {
+            opacity: 0;
+        }
+
+        .hidden-text {
+            display: none;
+            text-align: center;
+            font-weight: bold;
+            margin-top: 20px;
+            font-size: 75px;
+            font-family: 'Comic Sans MS', 'Comic Sans', cursive;
+            color: red;
+            display: none;
+            text-align: center;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        .visible {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="button-bg-container" id="button">
+        <div class="background-layer" id="first-bg" style="background-image: url('img/first_background.svg');"></div>
+        <div class="background-layer hidden" id="second-bg" style="background-image: url('img/second_background.svg');"></div>
+        <div class="circle" style="background-image: url('img/circle.svg');"></div>
+        <div class="foreground-layer" id="first-layer" style="background-image: url('img/first_layer.svg');"></div>
+        <div class="foreground-layer hidden" id="second-layer" style="background-image: url('img/second_layer.svg');"></div>
+    </div>
+    <div class="hidden-text" id="confirmation-text">
+        нажав на эту кнопку, я подтверждаю, что никита @jointplayer самый крутой человек в мире
+    </div>
+    <script>
+        const button = document.getElementById('button');
+        const firstBg = document.getElementById('first-bg');
+        const secondBg = document.getElementById('second-bg');
+        const firstLayer = document.getElementById('first-layer');
+        const secondLayer = document.getElementById('second-layer');
+        const confirmationText = document.getElementById('confirmation-text');
+
+        button.addEventListener('click', () => {
+            button.classList.toggle('moved');
+            firstBg.classList.toggle('hidden');
+            secondBg.classList.toggle('hidden');
+            firstLayer.classList.toggle('hidden');
+            secondLayer.classList.toggle('hidden');
+
+            document.body.classList.toggle('light-bg');
+
+            if (confirmationText.classList.contains('visible')) {
+                confirmationText.classList.remove('visible');
+            } else {
+                confirmationText.classList.add('visible');
+            }
+        });
+
+        document.body.addEventListener('transitionend', () => {
+            if (document.body.classList.contains('light-bg')) {
+                document.body.style.backgroundColor = '#fffacd'; /* Светло-желтый фон */
+            } else {
+                document.body.style.backgroundColor = '#e0bbff'; /* Нежно-фиолетовый фон */
+            }
+        });
+    </script>
+</body>
+</html>
